@@ -1,0 +1,124 @@
+
+\documentclass[a4paper,12pt]{article}
+% math symbols
+\usepackage{amssymb,amsmath}
+\synctex=1
+% for different compilers
+\usepackage{ifpdf}
+% geometry of page
+\usepackage[margin=2cm]{geometry}
+
+% if pdflatex, then
+\ifpdf
+\usepackage[russian]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[unicode]{hyperref}
+\usepackage[pdftex]{graphicx}
+\usepackage{cmlgc}
+% if xelatex, then
+\else
+% math fonts
+\usepackage{fouriernc}
+% xelatex specific packages
+\usepackage[xetex]{hyperref}
+\usepackage{xltxtra}	% \XeLaTeX macro
+\usepackage{xunicode}	% some extra unicode support
+\defaultfontfeatures{Mapping=tex-text}
+\usepackage{polyglossia}	% instead of babel in xelatex
+\usepackage{indentfirst}	% 
+\setdefaultlanguage{russian}
+% fonts
+\newfontfamily\cyrillicfont{SchoolBookC}
+\newfontfamily\cyrillicfontsf{TextBookC}
+\setmonofont{Consolas}
+\fi
+
+% several pictures in one figure
+\usepackage{subfig}
+% calc in TeX expressions
+\usepackage{calc}
+% nice pictures and plots
+\usepackage{pgfplots,tikz,circuitikz}
+% different libraries for pictures
+\usetikzlibrary{%
+  arrows,%
+  calc,%
+  patterns,%
+  decorations.pathreplacing,%
+  decorations.pathmorphing,%
+  decorations.markings,%
+  intersections,%
+  decorations.text%
+}
+
+\usepackage{tkz-euclide}
+
+\graphicspath{{./pics/}}
+
+% colors of the hyperlinks
+\hypersetup{colorlinks,%
+  citecolor=blue,%
+  urlcolor=blue,%
+  linkcolor=red
+}
+
+\newcommand{\foot}[1]{\mbox{\footnotesize{#1}}}
+
+
+\tikzset{
+    rotate around with nodes/.style args={#1:#2}{
+        rotate around={#1:#2},
+        set node rotation={#1},
+    },
+    rotate with/.style={rotate=\qrrNodeRotation},
+    set node rotation/.store in=\qrrNodeRotation,
+}
+
+
+\tikzset{>=latex,%
+  interface/.style={postaction={draw,decorate,decoration={border,angle=45,amplitude=0.2cm,segment
+        length=1mm}}},%
+  spring/.style={thick,decorate,decoration={aspect=0.5, segment
+  length=1.3mm, amplitude=1mm,coil}},%
+  marrow/.style={postaction={draw,decorate,decoration={markings,
+        mark=at position 0.6 with {\arrow{latex}}}}}}
+
+% обозначение угла
+\tikzset{arcnode/.style={
+            decoration={
+                        markings, raise = 3mm,  
+                        mark=at position 0.5 with { 
+                                    \node[inner sep=0] {#1};
+                        }
+            },
+            postaction={decorate}
+      }
+}
+
+% команда для отметки угла: проводит дугу между двумя лучами,
+% проведёнными между точками #2--#3 и #2--#4
+% первый аргумент - необязательный, стиль линии
+% #2,#3,#4 - точки
+% #5 - радиус дуги для обозначения угла
+% #6 - обозначение угла
+\newcommand*\marktheangle[6][]{
+            \draw[thick,arcnode={#6},#1] let \p2=($(#3)-(#2)$),%
+                        \p3=($(#4)-(#2)$),%
+                        \n2 = {atan2(\x2,\y2)},%
+                        \n3 = {atan2(\x3,\y3)}%
+                        in ($(\n2:#5)+(#2)$) arc (\n2:\n3:#5);
+}
+
+
+\pgfplotsset{compat=newest}
+
+\usepackage{expl3}[2012-07-08]
+\ExplSyntaxOn
+\cs_new_eq:NN \fpeval \fp_eval:n
+\ExplSyntaxOff
+\usetikzlibrary{calc}
+
+\usetikzlibrary{calc,patterns,angles,quotes}
+
+\usepackage{import}
+

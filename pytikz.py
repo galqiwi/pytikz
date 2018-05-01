@@ -13,3 +13,11 @@ class Tikzmaker:
 		self.tex = self.tex + '\
 		\\end{tikzpicture}\
 		\end{figure}'
+	def line(self, begin = (0, 0), end = (1, 1)):
+		self.tex = self.tex + \
+		'\\draw ' + str(begin) + ' -- ' + str(end) + ';\n';
+		
+	def print(self, file = open('fig.tex', 'w')):
+		if not self.closed:
+			self.close()
+		print(self.tex, file=file)
