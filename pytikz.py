@@ -8,11 +8,13 @@ class Tikzmaker:
 		\centering \
 		\\begin{tikzpicture}[scale=' + str(scale) + ']\n'
 		self.closed = False
+		
 	def close(self):
 		self.closed = True
 		self.tex = self.tex + '\
 		\\end{tikzpicture}\
 		\end{figure}'
+
 	def line(self, begin = (0, 0), end = (1, 1), opt='black'):
 		self.tex = self.tex + \
 		'\\draw[' + opt + '] ' + str(begin) + ' -- ' + str(end) + ';\n';
@@ -20,9 +22,6 @@ class Tikzmaker:
 	def midnode(self, begin = (0, 0), end = (1, 1), name = 'x', opt='black', nodeopt='midway, fill=white'):
 		self.tex = self.tex + \
 		'\\draw[' + opt + '] ' + str(begin) + ' -- ' + str(end) + ' node [' + str(nodeopt) + '] {' + str(name) + '};\n';
-
-	def line_crossed(self, begin = (0, 0), end = (1, 1), opt='black', nodeopt='midway, fill=white'):
-		self.midnode(begin, end, 'x', opt, nodeopt)
 
 	def node(self, begin = (0, 0), name='O', opt='above'):
 		self.tex = self.tex + \
@@ -35,7 +34,8 @@ class Tikzmaker:
 
 	def circle(self, begin = (0, 0), r=1, opt = 'black'):
 		self.tex = self.tex + \
-		'\\draw[' + opt + '] ' + str(begin) + ' circle (' + str(r) + ');'
+		'\\draw[' + opt + '] ' + str(begin) + ' circle (' + str(r) + ');\n'
+
 	def print(self, file = open('fig.tex', 'w')):
 		if not self.closed:
 			self.close()
