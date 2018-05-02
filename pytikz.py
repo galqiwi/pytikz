@@ -17,13 +17,17 @@ class Tikzmaker:
 		self.tex = self.tex + \
 		'\\draw[' + opt + '] ' + str(begin) + ' -- ' + str(end) + ';\n';
 
-	def line_crossed(self, begin = (0, 0), end = (1, 1), opt='black'):
+	def midnode(self, begin = (0, 0), end = (1, 1), name = 'x', opt='black', nodeopt='midway, fill=white'):
 		self.tex = self.tex + \
-		'\\draw[' + opt + '] ' + str(begin) + ' -- ' + str(end) + ' node [midway, fill=white] {x};\n';
+		'\\draw[' + opt + '] ' + str(begin) + ' -- ' + str(end) + ' node [' + str(nodeopt) + '] {' + str(name) + '};\n';
+
+	def line_crossed(self, begin = (0, 0), end = (1, 1), opt='black', nodeopt='midway, fill=white'):
+		self.midnode(begin, end, 'x', opt, nodeopt)
 
 	def node(self, begin = (0, 0), name='O', opt='above'):
 		self.tex = self.tex + \
 		'\\draw[' + opt + '] node at ' + str(begin) + '  {' + str(name) + '};\n';
+
 
 	def thick_node(self, begin = (0, 0), name='0', r=0.015, opt='above', opt_c='fill=black'):
 		self.circle(begin, r, opt_c)
